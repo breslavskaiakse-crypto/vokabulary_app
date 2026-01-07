@@ -1,0 +1,36 @@
+services:
+  php:
+    build:
+      context: .
+    container_name: php-app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - mysql
+      - libretranslate
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  libretranslate:
+    image: libretranslate/libretranslate:latest
+    container_name: libretranslate
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

@@ -1,0 +1,16 @@
+{
+    "name": "project/prime-number-checker",
+    "description": "Prime number checker with PHPUnit tests",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "../.."
+        }
+    },
+    "require": {
+        "lucianotonet/groq-php": "^1.3"
+    }
+}
