@@ -2,7 +2,6 @@
 // getWordExplanations.php - Get word explanations using Groq AI when source and target languages are the same
 header('Content-Type: application/json');
 
-session_start();
 $config = require 'config.php';
 $groqApiKey = $config['groq_api_key'] ?? '';
 

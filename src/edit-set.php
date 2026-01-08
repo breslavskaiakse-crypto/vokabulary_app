@@ -1,12 +1,11 @@
 <?php
-session_start();
 $pdo = require 'db.php';
 
 // Get user ID from session
 $userId = $_SESSION['user_id'] ?? null;
 
 if (!$userId) {
-    header('Location: signin.php?error=Please log in to edit sets');
+    header('Location: signin?error=Please log in to edit sets');
     exit;
 }
 
@@ -22,7 +21,7 @@ $translationLanguage = 'English';
 if ($isNewSet) {
     // Load from session (AI-generated set)
     if (!isset($_SESSION['ai_generated_set'])) {
-        header('Location: create-with-ai.php?error=' . urlencode('No AI-generated set found. Please create a new set.'));
+        header('Location: create-with-ai?error=' . urlencode('No AI-generated set found. Please create a new set.'));
         exit;
     }
     
@@ -35,7 +34,7 @@ if ($isNewSet) {
 } else {
     // Editing existing set - load from database
     if (!$setId) {
-        header('Location: my-sets.php?error=Set ID is required');
+        header('Location: my-sets?error=Set ID is required');
         exit;
     }
     
@@ -46,7 +45,7 @@ if ($isNewSet) {
         $setData = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if (!$setData) {
-            header('Location: my-sets.php?error=Set not found or you do not have access to this set');
+            header('Location: my-sets?error=Set not found or you do not have access to this set');
             exit;
         }
         
@@ -68,7 +67,7 @@ if ($isNewSet) {
         }
         
     } catch (PDOException $e) {
-        header('Location: my-sets.php?error=' . urlencode('Database error: ' . $e->getMessage()));
+        header('Location: my-sets?error=' . urlencode('Database error: ' . $e->getMessage()));
         exit;
     }
 }
@@ -309,8 +308,8 @@ if ($isNewSet) {
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
-    <form method="POST" action="crudsForSets.php" id="setForm" onsubmit="return prepareFormData(event)">
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
+    <form method="POST" action="crudsForSets" id="setForm" onsubmit="return prepareFormData(event)">
     <h1><?php echo $isNewSet ? 'Review and Save Your AI-Generated Set' : 'Edit my set "' . htmlspecialchars($setName) . '"'; ?></h1>
 <div class="container">
     <?php if (isset($_GET['error'])): ?>
@@ -401,7 +400,7 @@ if ($isNewSet) {
     </div>
     <div class="button-container">
         <button class="update-button" type="submit"><?php echo $isNewSet ? 'Save' : 'Update'; ?></button>
-        <button class="cancel-button" type="button" onclick="window.location.href='<?php echo $isNewSet ? 'create-with-ai.php' : 'my-sets.php'; ?>'">Cancel</button>
+        <button class="cancel-button" type="button" onclick="window.location.href='<?php echo $isNewSet ? 'create-with-ai' : 'my-sets'; ?>'">Cancel</button>
     </div>
 </div>
     </form>
@@ -482,7 +481,7 @@ if ($isNewSet) {
         
         // Fetch word suggestions only (not translations)
         wordTimers[cardId] = setTimeout(() => {
-            fetch(`getWordSuggestions.php?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
+            fetch(`getWordSuggestions?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.suggestions && data.suggestions.length > 0) {
@@ -539,7 +538,7 @@ if ($isNewSet) {
         // If languages are the same, fetch word explanations instead of translations
         if (wordLanguage === translationLanguage) {
             // Fetch word explanations using AI
-            fetch(`getWordExplanations.php?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
+            fetch(`getWordExplanations?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.suggestions && data.suggestions.length > 0) {
@@ -555,7 +554,7 @@ if ($isNewSet) {
                 });
         } else {
             // Fetch translations when languages are different
-            fetch(`getTranslationSuggestions.php?word=${encodeURIComponent(word)}&source=${encodeURIComponent(wordLanguage)}&target=${encodeURIComponent(translationLanguage)}`)
+            fetch(`getTranslationSuggestions?word=${encodeURIComponent(word)}&source=${encodeURIComponent(wordLanguage)}&target=${encodeURIComponent(translationLanguage)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.suggestions && data.suggestions.length > 0) {
@@ -604,7 +603,7 @@ if ($isNewSet) {
         translationTimers[cardId] = setTimeout(() => {
             // If languages are the same, fetch word explanations instead of translations
             if (wordLanguage === translationLanguage) {
-                fetch(`getWordExplanations.php?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
+                fetch(`getWordExplanations?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.suggestions && data.suggestions.length > 0) {
@@ -619,7 +618,7 @@ if ($isNewSet) {
                     });
             } else {
                 // Fetch translations when languages are different
-                fetch(`getTranslationSuggestions.php?word=${encodeURIComponent(word)}&source=${encodeURIComponent(wordLanguage)}&target=${encodeURIComponent(translationLanguage)}`)
+                fetch(`getTranslationSuggestions?word=${encodeURIComponent(word)}&source=${encodeURIComponent(wordLanguage)}&target=${encodeURIComponent(translationLanguage)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.suggestions && data.suggestions.length > 0) {

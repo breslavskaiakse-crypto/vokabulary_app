@@ -394,7 +394,7 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
     <button class="settings-button" onclick="openSettings()" title="Settings">⚙️</button>
     
     <div id="content">
@@ -484,7 +484,7 @@
         }
 
         // Fetch set from database
-        fetch(`getSetById.php?id=${setId}`)
+        fetch(`getSetById?id=${setId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -575,7 +575,7 @@
                     } else {
                         // Only 1 word in set, generate wrong translation with AI
                         promises.push(
-                            fetch(`getWrongAnswers.php?word=${encodeURIComponent(word.word)}&correctTranslation=${encodeURIComponent(word.translation)}&language=English&count=1`)
+                            fetch(`getWrongAnswers?word=${encodeURIComponent(word.word)}&correctTranslation=${encodeURIComponent(word.translation)}&language=English&count=1`)
                                 .then(response => response.json())
                                 .then(data => {
                                     if (data.wrongAnswers && data.wrongAnswers.length > 0) {
@@ -679,7 +679,7 @@
             try {
                 const wordForAI = showWord ? word.word : word.translation;
                 const correctForAI = showWord ? word.translation : word.word;
-                const response = await fetch(`getWrongAnswers.php?word=${encodeURIComponent(wordForAI)}&correctTranslation=${encodeURIComponent(correctForAI)}&language=English&count=${needed}`);
+                const response = await fetch(`getWrongAnswers?word=${encodeURIComponent(wordForAI)}&correctTranslation=${encodeURIComponent(correctForAI)}&language=English&count=${needed}`);
                 const data = await response.json();
                 if (data.wrongAnswers && Array.isArray(data.wrongAnswers)) {
                     wrongAnswers.push(...data.wrongAnswers.slice(0, needed));
@@ -884,7 +884,7 @@
                         }).join('')}
                     </div>
                     <div class="result-buttons">
-                        <button class="result-button" onclick="window.location.href='my-sets.php'">My Sets</button>
+                        <button class="result-button" onclick="window.location.href='my-sets'">My Sets</button>
                     </div>
                 </div>
             </div>

@@ -365,7 +365,7 @@
     </style>
 </head>
 <body>
-<button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+<button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
 <button class="settings-button" onclick="openSettings()" title="Settings">⚙️</button>
 
 <div id="content">
@@ -504,7 +504,7 @@
         }
 
         // Fetch set from database
-        fetch(`getSetById.php?id=${setId}`)
+        fetch(`getSetById?id=${setId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -653,11 +653,11 @@
 
     function makeTest() {
         // Navigate to test page (set ID is already stored)
-        window.location.href = 'test.php';
+        window.location.href = 'test';
     }
 
     function goToMySets() {
-        window.location.href = 'my-sets.php';
+        window.location.href = 'my-sets';
     }
 
     function escapeHtml(text) {

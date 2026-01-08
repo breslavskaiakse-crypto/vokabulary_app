@@ -1,6 +1,5 @@
 <?php
 // library.php - Display ready-made vocabulary sets from the library
-session_start();
 $pdo = require 'db.php';
 
 // Check if is_library column exists, if not, create it
@@ -152,7 +151,7 @@ try {
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
     <h1>Vocabulary Library</h1>
     <div class="container">
         <?php if (isset($_GET['success'])): ?>
@@ -191,13 +190,13 @@ try {
             button.disabled = true;
             button.textContent = 'Adding...';
             
-            fetch('copy-library-set.php?set_id=' + setId, {
+            fetch('copy-library-set?set_id=' + setId, {
                 method: 'POST'
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = 'my-sets.php?success=' + encodeURIComponent('Set added to your collection!');
+                    window.location.href = 'my-sets?success=' + encodeURIComponent('Set added to your collection!');
                 } else {
                     alert('Error: ' + (data.error || 'Failed to add set'));
                     button.disabled = false;

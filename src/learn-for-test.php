@@ -393,7 +393,7 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
     <button class="settings-button" onclick="openSettings()" title="Settings">⚙️</button>
     
     <div id="content">
@@ -627,7 +627,7 @@
         }
 
         // Fetch set from database
-        fetch(`getSetById.php?id=${setId}`)
+        fetch(`getSetById?id=${setId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -920,7 +920,7 @@
             try {
                 const wordForAI = showWord ? currentWord.word : currentWord.translation;
                 const correctForAI = showWord ? currentWord.translation : currentWord.word;
-                const response = await fetch(`getWrongAnswers.php?word=${encodeURIComponent(wordForAI)}&correctTranslation=${encodeURIComponent(correctForAI)}&language=English&count=${needed}`);
+                const response = await fetch(`getWrongAnswers?word=${encodeURIComponent(wordForAI)}&correctTranslation=${encodeURIComponent(correctForAI)}&language=English&count=${needed}`);
                 const data = await response.json();
                 if (data.wrongAnswers && Array.isArray(data.wrongAnswers)) {
                     // Filter out any wrong answers that are already in our list
@@ -1054,11 +1054,11 @@
 
     function makeTest() {
         // Navigate to test page (set ID is already stored)
-        window.location.href = 'test.php';
+        window.location.href = 'test';
     }
 
     function goToMySets() {
-        window.location.href = 'my-sets.php';
+        window.location.href = 'my-sets';
     }
 
     function escapeHtml(text) {

@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($password, $existingUser['Password'])) {
                 // Password correct, log in
                 $_SESSION['user_id'] = $existingUser['id'];
-                header('Location: index?success=Welcome back!');
+                header('Location: /?success=Welcome back!');
                 exit;
             } else {
                 // Password incorrect
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Log in the new user
             $_SESSION['user_id'] = $pdo->lastInsertId();
 
-            header('Location: index?success=Welcome! You have been registered successfully.');
+            header('Location: /?success=Welcome! You have been registered successfully.');
             exit;
         }
 

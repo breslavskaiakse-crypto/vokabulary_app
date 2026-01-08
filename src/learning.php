@@ -71,11 +71,11 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
 <h1>Learning</h1>
 <div class="button-container">
-    <button onclick="window.location.href='learn-with-cards.php'">Learn with Cards</button>
-    <button onclick="window.location.href='learn-for-test.php'">Learn for a Test</button>
+    <button onclick="window.location.href='learn-with-cards'">Learn with Cards</button>
+    <button onclick="window.location.href='learn-for-test'">Learn for a Test</button>
 </div>
 </body>
 </html>

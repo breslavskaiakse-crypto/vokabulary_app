@@ -3,7 +3,7 @@
         'name' => 'project/prime-number-checker',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '05514ed283c780ce8be57963152c6ce4d9ee2647',
+        'reference' => '684ea8a581e700f159406b661fb30e23b3f5e244',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -166,7 +166,7 @@
         'project/prime-number-checker' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '05514ed283c780ce8be57963152c6ce4d9ee2647',
+            'reference' => '684ea8a581e700f159406b661fb30e23b3f5e244',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

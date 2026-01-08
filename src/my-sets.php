@@ -1,12 +1,11 @@
 <?php
-session_start();
 $pdo = require 'db.php';
 
 // Get user ID from session
 $userId = $_SESSION['user_id'] ?? null;
 
 if (!$userId) {
-    header('Location: signin.php?error=Please log in to view your sets');
+    header('Location: signin?error=Please log in to view your sets');
     exit;
 }
 
@@ -159,7 +158,7 @@ try {
     </style>
 </head>
 <body>
-<button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+<button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
 <h1>My Sets</h1>
 <div class="container" id="setsContainer">
     <?php if (count($data) === 0): ?>
@@ -174,11 +173,11 @@ try {
                     <button class="set-button" onclick="makeTest(<?php echo $set['id'] ?>)">Make a Test</button>
                 </div>
                 <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <form method="POST" action="crudsForSets.php" style="margin: 0;">
+                    <form method="POST" action="crudsForSets" style="margin: 0;">
                         <input type="hidden" name="setId" value="<?php echo $set['id'] ?>">
                         <button style="background:rgb(45, 15, 77); padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;" value="delete" name="deleteSet" type="submit">Delete</button>
                     </form>
-                    <button style="background: rgb(74, 49, 100); padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="window.location.href='edit-set.php?set_id=<?php echo $set['id'] ?>'">Edit</button>
+                    <button style="background: rgb(74, 49, 100); padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="window.location.href='edit-set?set_id=<?php echo $set['id'] ?>'">Edit</button>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -190,13 +189,13 @@ try {
     function keepLearning(setId) {
         // Store the selected set ID for use in learning page
         localStorage.setItem('currentLearningSetId', setId);
-        window.location.href = 'learning.php';
+        window.location.href = 'learning';
     }
     
     function makeTest(setId) {
         // Store the selected set ID for use in test page
         localStorage.setItem('currentLearningSetId', setId);
-        window.location.href = 'test.php';
+        window.location.href = 'test';
     }
 </script>
 </body>

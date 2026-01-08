@@ -2,7 +2,6 @@
 // import-library-sets.php - Import vocabulary sets from public datasets into the library
 // This script can import from JSON or CSV files
 
-session_start();
 $pdo = require 'db.php';
 
 // Check if is_library column exists, if not, create it
@@ -282,7 +281,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             resultDiv.innerHTML = 'Importing...';
             
             try {
-                const response = await fetch('import-library-sets.php', {
+                const response = await fetch('import-library-sets', {
                     method: 'POST',
                     body: formData
                 });

@@ -48,9 +48,9 @@
 <body>
 <h1>Vocabulary app:)</h1>
 <div class="button-container">
-    <button onclick="window.location.href='my-sets.php'">My Sets</button>
-    <button onclick="window.location.href='create-set.php'">Create a New Set</button>
-    <button onclick="window.location.href='profile.php'">My Profile</button>
+    <button onclick="window.location.href='my-sets'">My Sets</button>
+    <button onclick="window.location.href='create-set'">Create a New Set</button>
+    <button onclick="window.location.href='profile'">My Profile</button>
 </div>
 </body>
 </html>

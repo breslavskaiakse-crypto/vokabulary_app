@@ -71,12 +71,12 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
 <h1>New Set</h1>
 <div class="button-container">
-    <button onclick="window.location.href='create-myself.php'">Create a Set Myself</button>
-    <button onclick="window.location.href='library.php'">Take a Ready Set from the Libary</button>
-    <button onclick="window.location.href='create-with-ai.php'">Create My Set with AI</button>
+    <button onclick="window.location.href='create-myself'">Create a Set Myself</button>
+    <button onclick="window.location.href='library'">Take a Ready Set from the Libary</button>
+    <button onclick="window.location.href='create-with-ai'">Create My Set with AI</button>
 </div>
 </body>
 </html>

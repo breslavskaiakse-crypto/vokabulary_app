@@ -1,6 +1,5 @@
 <?php
 // copy-library-set.php - Copy a library set to user's collection
-session_start();
 $pdo = require 'db.php';
 
 header('Content-Type: application/json');

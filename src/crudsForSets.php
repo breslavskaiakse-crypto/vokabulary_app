@@ -1,12 +1,11 @@
 <?php
-session_start();
 $pdo = require 'db.php';
 
 // Get user ID from session
 $userId = $_SESSION['user_id'] ?? null;
 
 if (!$userId) {
-    header('Location: signin.php?error=Please log in to manage your sets');
+    header('Location: signin?error=Please log in to manage your sets');
     exit;
 }
  
@@ -32,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['deleteSet']) && !iss
     }
 
     if ($name === '') {
-        header('Location: create-myself.php?error=Set name is required');
+        header('Location: create-myself?error=Set name is required');
         exit;
     }
     
     if (empty($words)) {
-        header('Location: create-myself.php?error=At least one word is required');
+        header('Location: create-myself?error=At least one word is required');
         exit;
     }
 
@@ -92,9 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['deleteSet']) && !iss
         }
         
         if ($firstWordInserted) {
-            header('Location: my-sets.php?success=' . urlencode('Set saved successfully!'));
+            header('Location: my-sets?success=' . urlencode('Set saved successfully!'));
         } else {
-            header('Location: my-sets.php?error=' . urlencode('No valid words to save'));
+            header('Location: my-sets?error=' . urlencode('No valid words to save'));
         }
         exit;
     } catch (PDOException $e) {
@@ -114,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteSet'])) {
         $setOwner = $checkStmt->fetch();
         
         if (!$setOwner || $setOwner['user_id'] != $userId) {
-            header('Location: my-sets.php?error=' . urlencode('You do not have permission to delete this set'));
+            header('Location: my-sets?error=' . urlencode('You do not have permission to delete this set'));
             exit;
         }
         
@@ -122,10 +121,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteSet'])) {
         $sstmt = $pdo->prepare("DELETE FROM Sets WHERE set_id = :set_id AND user_id = :user_id");
         $sstmt->execute(['set_id' => $setId, 'user_id' => $userId]);
         
-        header('Location: my-sets.php?success=' . urlencode('Set deleted successfully!'));
+        header('Location: my-sets?success=' . urlencode('Set deleted successfully!'));
         exit;
     } else {
-        header('Location: my-sets.php?error=' . urlencode('Set ID is required'));
+        header('Location: my-sets?error=' . urlencode('Set ID is required'));
         exit;
     }
 }
@@ -214,9 +213,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateSet'])) {
             }
             
             if ($firstWordInserted) {
-                header('Location: my-sets.php?success=' . urlencode('Set saved successfully!'));
+                header('Location: my-sets?success=' . urlencode('Set saved successfully!'));
             } else {
-                header('Location: edit-set.php?new=1&error=' . urlencode('Failed to save words to database'));
+                header('Location: edit-set?new=1&error=' . urlencode('Failed to save words to database'));
             }
             exit;
         } else {
@@ -227,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateSet'])) {
             $setOwner = $checkStmt->fetch();
             
             if (!$setOwner || $setOwner['user_id'] != $userId) {
-                header('Location: my-sets.php?error=' . urlencode('You do not have permission to edit this set'));
+                header('Location: my-sets?error=' . urlencode('You do not have permission to edit this set'));
                 exit;
             }
             
@@ -255,7 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateSet'])) {
                 }
             }
             
-            header('Location: my-sets.php?success=' . urlencode('Set updated successfully!'));
+            header('Location: my-sets?success=' . urlencode('Set updated successfully!'));
             exit;
         }
     } catch (PDOException $e) {

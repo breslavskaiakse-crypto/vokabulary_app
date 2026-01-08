@@ -1,6 +1,5 @@
 <?php
 // generateAISet.php - Handle AI vocabulary set generation
-session_start();
 $pdo = require 'db.php';
 $config = require 'config.php';
 

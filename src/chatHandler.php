@@ -1,6 +1,5 @@
 <?php
 // chatHandler.php - Handle chat messages with Groq API
-session_start();
 header('Content-Type: application/json');
 
 $config = require 'config.php';

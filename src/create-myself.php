@@ -232,8 +232,8 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
-    <form method="POST" action="crudsForSets.php" id="setForm" onsubmit="return prepareFormData(event)">
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
+    <form method="POST" action="crudsForSets" id="setForm" onsubmit="return prepareFormData(event)">
     <h1>New Set</h1>
 <div class="container">
     <?php if (isset($_GET['error'])): ?>
@@ -415,7 +415,7 @@
         
         // Fetch word suggestions only (not translations)
         wordTimers[cardId] = setTimeout(() => {
-            fetch(`getWordSuggestions.php?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
+            fetch(`getWordSuggestions?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.suggestions && data.suggestions.length > 0) {
@@ -472,7 +472,7 @@
         // If languages are the same, fetch word explanations instead of translations
         if (wordLanguage === translationLanguage) {
             // Fetch word explanations using AI
-            fetch(`getWordExplanations.php?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
+            fetch(`getWordExplanations?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.suggestions && data.suggestions.length > 0) {
@@ -488,7 +488,7 @@
                 });
         } else {
             // Fetch translations when languages are different
-            fetch(`getTranslationSuggestions.php?word=${encodeURIComponent(word)}&source=${encodeURIComponent(wordLanguage)}&target=${encodeURIComponent(translationLanguage)}`)
+            fetch(`getTranslationSuggestions?word=${encodeURIComponent(word)}&source=${encodeURIComponent(wordLanguage)}&target=${encodeURIComponent(translationLanguage)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.suggestions && data.suggestions.length > 0) {
@@ -537,7 +537,7 @@
         translationTimers[cardId] = setTimeout(() => {
             // If languages are the same, fetch word explanations instead of translations
             if (wordLanguage === translationLanguage) {
-                fetch(`getWordExplanations.php?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
+                fetch(`getWordExplanations?word=${encodeURIComponent(word)}&language=${encodeURIComponent(wordLanguage)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.suggestions && data.suggestions.length > 0) {
@@ -552,7 +552,7 @@
                     });
             } else {
                 // Fetch translations when languages are different
-                fetch(`getTranslationSuggestions.php?word=${encodeURIComponent(word)}&source=${encodeURIComponent(wordLanguage)}&target=${encodeURIComponent(translationLanguage)}`)
+                fetch(`getTranslationSuggestions?word=${encodeURIComponent(word)}&source=${encodeURIComponent(wordLanguage)}&target=${encodeURIComponent(translationLanguage)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.suggestions && data.suggestions.length > 0) {

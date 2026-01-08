@@ -147,7 +147,7 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
     <h1>AI Chat</h1>
     <div class="chat-container">
         <div class="chat-messages" id="chatMessages">
@@ -191,7 +191,7 @@
             const formData = new FormData();
             formData.append('message', message);
 
-            fetch('chatHandler.php', {
+            fetch('chatHandler', {
                 method: 'POST',
                 body: formData
             })

@@ -1,5 +1,4 @@
 <?php
-session_start();
 $pdo = require 'db.php';
 
 // Get user ID from session (we'll need to set this during login)
@@ -7,7 +6,7 @@ $userId = $_SESSION['user_id'] ?? null;
 
 if (!$userId) {
     // If no user is logged in, redirect to login
-    header('Location: login.php?error=Please log in to view your profile');
+    header('Location: login?error=Please log in to view your profile');
     exit;
 }
 
@@ -17,7 +16,7 @@ $stmt->execute([$userId]);
 $user = $stmt->fetch();
 
 if (!$user) {
-    header('Location: login.php?error=User not found');
+    header('Location: login?error=User not found');
     exit;
 }
 ?>
@@ -176,7 +175,7 @@ if (!$user) {
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
     
     <h1>My Profile</h1>
     
@@ -190,7 +189,7 @@ if (!$user) {
         }
         ?>
         
-        <form method="POST" action="processProfile.php" id="profileForm">
+        <form method="POST" action="processProfile" id="profileForm">
             <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
             
             <!-- Name Field -->
@@ -297,7 +296,7 @@ if (!$user) {
             }
             
             // Submit form
-            fetch('processProfile.php', {
+            fetch('processProfile', {
                 method: 'POST',
                 body: formData
             })
@@ -305,10 +304,10 @@ if (!$user) {
             .then(data => {
                 if (data.success) {
                     // Reload page to show updated data
-                    window.location.href = 'profile.php?success=' + encodeURIComponent(data.message);
+                    window.location.href = 'profile?success=' + encodeURIComponent(data.message);
                 } else {
                     // Show error message
-                    window.location.href = 'profile.php?error=' + encodeURIComponent(data.error);
+                    window.location.href = 'profile?error=' + encodeURIComponent(data.error);
                 }
             })
             .catch(error => {

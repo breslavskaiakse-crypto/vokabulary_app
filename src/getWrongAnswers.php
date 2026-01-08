@@ -2,7 +2,6 @@
 // getWrongAnswers.php - Generate wrong translation answers for multiple choice questions
 header('Content-Type: application/json');
 
-session_start();
 $config = require 'config.php';
 $groqApiKey = $config['groq_api_key'] ?? '';
 

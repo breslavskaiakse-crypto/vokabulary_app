@@ -113,7 +113,7 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+    <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
 <h1>New Set with AI</h1>
 <div class="container">
     <div class="input-section">
@@ -238,7 +238,7 @@
         formData.append('termsLanguage', termsLanguage);
         formData.append('translationLanguage', translationLanguage);
         
-        fetch('generateAISet.php', {
+        fetch('generateAISet', {
             method: 'POST',
             body: formData
         })
@@ -246,7 +246,7 @@
         .then(data => {
             if (data.success) {
                 // Redirect to edit-set page to review and save the generated set
-                window.location.href = 'edit-set.php?new=1';
+                window.location.href = 'edit-set?new=1';
             } else {
                 alert('Error: ' + (data.error || 'Failed to create set. Please try again.'));
                 createButton.disabled = false;
