@@ -54,6 +54,32 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .delete-card-button {
+            position: absolute;
+            top: 25px;
+            right: 15px;
+            background-color: #4a2d5c;
+            color: white;
+            border: 2px solid #6b4c93;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.5em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 101;
+        }
+        .delete-card-button:hover {
+            background-color: #6b4c93;
+            transform: scale(1.1);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
         }
         .card-input {
             width: 100%;
@@ -272,6 +298,7 @@
     
     <div id="cardsContainer">
         <div class="card" data-card-id="1">
+            <button type="button" class="delete-card-button" onclick="deleteCard(1)" id="deleteButton1" style="display: none;">×</button>
             <div class="input-wrapper">
                 <input type="text" class="card-input" placeholder="New word" id="word1" oninput="handleWordInput(1)" onkeydown="handleKeyDown(event, 1, 'word')" onfocus="handleWordFocus(1)" autocomplete="off">
                 <div class="suggestions-dropdown" id="wordSuggestions1"></div>
@@ -291,6 +318,33 @@
     </form>
 <script>
     let cardCounter = 1;
+    
+    function deleteCard(cardId) {
+        const cards = document.querySelectorAll('.card');
+        // Don't allow deleting if it's the only card
+        if (cards.length <= 1) {
+            return;
+        }
+        
+        const card = document.querySelector(`.card[data-card-id="${cardId}"]`);
+        if (card) {
+            card.remove();
+            checkLastCard();
+            updateDeleteButtons();
+        }
+    }
+    
+    function updateDeleteButtons() {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            const cardId = card.getAttribute('data-card-id');
+            const deleteButton = document.getElementById(`deleteButton${cardId}`);
+            if (deleteButton) {
+                // Show delete button only if there's more than one card
+                deleteButton.style.display = cards.length > 1 ? 'flex' : 'none';
+            }
+        });
+    }
     
     function checkLastCard() {
         const cards = document.querySelectorAll('.card');
@@ -314,6 +368,9 @@
                 addButton.disabled = true;
             }
         }
+        
+        // Update delete buttons visibility
+        updateDeleteButtons();
     }
     
     // Debounce timers for suggestions
@@ -582,6 +639,7 @@
         newCard.className = 'card';
         newCard.setAttribute('data-card-id', cardCounter);
         newCard.innerHTML = `
+            <button type="button" class="delete-card-button" onclick="deleteCard(${cardCounter})" id="deleteButton${cardCounter}">×</button>
             <div class="input-wrapper">
                 <input type="text" class="card-input" placeholder="New word" id="word${cardCounter}" oninput="handleWordInput(${cardCounter})" onkeydown="handleKeyDown(event, ${cardCounter}, 'word')" onfocus="handleWordFocus(${cardCounter})" autocomplete="off">
                 <div class="suggestions-dropdown" id="wordSuggestions${cardCounter}"></div>
@@ -595,6 +653,9 @@
         
         // Disable add button after adding new card
         document.getElementById('addButton').disabled = true;
+        
+        // Update delete buttons visibility
+        updateDeleteButtons();
         
         // Focus on the new word input
         document.getElementById(`word${cardCounter}`).focus();
@@ -663,6 +724,11 @@
         
         return true; // Allow form submission
     }
+    
+    // Initialize delete buttons visibility on page load
+    window.addEventListener('DOMContentLoaded', function() {
+        updateDeleteButtons();
+    });
 </script>
 </body>
 </html>

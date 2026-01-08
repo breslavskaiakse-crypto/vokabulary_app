@@ -590,8 +590,6 @@
     }
 
     function nextCard(knowWord) {
-        const currentWord = unknownWords[currentIndex];
-
         if (knowWord) {
             // Remove the word from unknown words
             unknownWords = unknownWords.filter((w, index) => index !== currentIndex);
