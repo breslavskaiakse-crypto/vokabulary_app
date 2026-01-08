@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
         'name' => 'project/prime-number-checker',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '05514ed283c780ce8be57963152c6ce4d9ee2647',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'bramus/router' => array(
+            'pretty_version' => '1.6.1',
+            'version' => '1.6.1.0',
+            'reference' => '55657b76da8a0a509250fb55b9dd24e1aa237eba',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../bramus/router',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'graham-campbell/result-type' => array(
             'pretty_version' => 'v1.1.4',
             'version' => '1.1.4.0',
@@ -155,9 +164,9 @@
             'dev_requirement' => true,
         ),
         'project/prime-number-checker' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '05514ed283c780ce8be57963152c6ce4d9ee2647',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

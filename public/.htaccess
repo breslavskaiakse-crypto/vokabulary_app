@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Deny direct access to all php files in src, excludes index.php in public
+RewriteCond %{REQUEST_URI} ^/src/.*\.php$
+RewriteRule ^(.*)$ index.php [L,QSA]
+
+# If its not a directory (for static) forward everyting to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]

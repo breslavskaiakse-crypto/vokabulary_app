@@ -9,7 +9,10 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 
 # Copy project files into container
-COPY src/ /var/www/html/
+COPY . /var/www/html/
+
+# Update Apache config
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/html

@@ -127,20 +127,20 @@
             echo '<div class="success-message">' . htmlspecialchars($_GET['success']) . '</div>';
         }
         ?>
-        <form method="POST" action="processSignin.php">
+        <form method="POST" action="/processSignin">
             <div class="input-section">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
             </div>
-            
+
             <div class="input-section">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
-            
+
             <div class="button-container">
                 <button type="submit" class="submit-button">Continue</button>
-                <button type="button" class="secondary-button" onclick="window.location.href='login.php'">I have no account</button>
+                <button type="button" class="secondary-button" onclick="window.location.href='login'">I have no account</button>
             </div>
         </form>
     </div>

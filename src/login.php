@@ -128,25 +128,25 @@
             echo '<div class="success-message">' . htmlspecialchars($_GET['success']) . '</div>';
         }
         ?>
-        <form method="POST" action="processLogin.php">
+        <form method="POST" action="/processLogin">
             <div class="input-section">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter your name" required>
             </div>
-            
+
             <div class="input-section">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
             </div>
-            
+
             <div class="input-section">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
-            
+
             <div class="button-container">
                 <button type="submit" class="submit-button">Continue</button>
-                <button type="button" class="secondary-button" onclick="window.location.href='signin.php'">I already have an account</button>
+                <button type="button" class="secondary-button" onclick="window.location.href='signin'">I already have an account</button>
             </div>
         </form>
     </div>
