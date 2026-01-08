@@ -44,7 +44,123 @@
         .home-button:active {
             transform: scale(0.95);
         }
-
+        .settings-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #9b7fb8;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+            z-index: 1000;
+        }
+        .settings-button:hover {
+            background-color: #8a6fa5;
+        }
+        .settings-button:active {
+            transform: scale(0.95);
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .modal-header {
+            color: #6b4c93;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        .modal-close:hover {
+            background-color: #f0f0f0;
+            color: #6b4c93;
+        }
+        .setting-group {
+            margin-bottom: 25px;
+        }
+        .setting-label {
+            display: block;
+            color: #6b4c93;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .setting-option {
+            margin-bottom: 15px;
+        }
+        .setting-option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1em;
+            color: #333;
+        }
+        .setting-option input[type="radio"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .modal-save-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.3em;
+            background-color: #9b7fb8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .modal-save-button:hover {
+            background-color: #8a6fa5;
+        }
         .card-container {
             perspective: 1000px;
             width: 100%;
@@ -88,7 +204,7 @@
 
         .card-text {
             font-size: 2.5em;
-            color: #536dfe;
+            color:rgb(94, 66, 146);
             text-align: center;
             word-wrap: break-word;
         }
@@ -250,9 +366,49 @@
 </head>
 <body>
 <button class="home-button" onclick="window.location.href='index.php'" title="Home">🏠</button>
+<button class="settings-button" onclick="openSettings()" title="Settings">⚙️</button>
 
 <div id="content">
     <div class="no-set-message">Loading...</div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="settingsModal" onclick="closeSettingsOnOverlay(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeSettings()">×</button>
+        <h2 class="modal-header">Settings</h2>
+        <div class="setting-group">
+            <label class="setting-label">First Side of Card:</label>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="firstSide" value="word" checked>
+                    Word (Original Language)
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="firstSide" value="translation">
+                    Translation
+                </label>
+            </div>
+        </div>
+        <div class="setting-group">
+            <label class="setting-label">Card Order:</label>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="cardOrder" value="set" checked>
+                    Like in Set
+                </label>
+            </div>
+            <div class="setting-option">
+                <label>
+                    <input type="radio" name="cardOrder" value="random">
+                    Random
+                </label>
+            </div>
+        </div>
+        <button class="modal-save-button" onclick="saveSettings()">Save Settings</button>
+    </div>
 </div>
 
 <script>
@@ -260,6 +416,84 @@
     let currentIndex = 0;
     let allWords = [];
     let unknownWords = [];
+    let settings = {
+        firstSide: 'word', // 'word' or 'translation'
+        cardOrder: 'set' // 'set' or 'random'
+    };
+
+    // Load settings from localStorage
+    function loadSettings() {
+        const savedSettings = localStorage.getItem('learnWithCardsSettings');
+        if (savedSettings) {
+            settings = JSON.parse(savedSettings);
+        }
+        // Update modal to reflect saved settings
+        updateSettingsModal();
+    }
+
+    // Save settings to localStorage
+    function saveSettingsToStorage() {
+        localStorage.setItem('learnWithCardsSettings', JSON.stringify(settings));
+    }
+
+    // Update modal to show current settings
+    function updateSettingsModal() {
+        const firstSideRadio = document.querySelector(`input[name="firstSide"][value="${settings.firstSide}"]`);
+        const cardOrderRadio = document.querySelector(`input[name="cardOrder"][value="${settings.cardOrder}"]`);
+        if (firstSideRadio) firstSideRadio.checked = true;
+        if (cardOrderRadio) cardOrderRadio.checked = true;
+    }
+
+    // Open settings modal
+    function openSettings() {
+        updateSettingsModal();
+        document.getElementById('settingsModal').classList.add('show');
+    }
+
+    // Close settings modal
+    function closeSettings() {
+        document.getElementById('settingsModal').classList.remove('show');
+    }
+
+    // Close settings when clicking overlay
+    function closeSettingsOnOverlay(event) {
+        if (event.target.id === 'settingsModal') {
+            closeSettings();
+        }
+    }
+
+    // Save settings from modal
+    function saveSettings() {
+        const firstSide = document.querySelector('input[name="firstSide"]:checked').value;
+        const cardOrder = document.querySelector('input[name="cardOrder"]:checked').value;
+        
+        const settingsChanged = settings.firstSide !== firstSide || settings.cardOrder !== cardOrder;
+        
+        settings.firstSide = firstSide;
+        settings.cardOrder = cardOrder;
+        saveSettingsToStorage();
+        
+        closeSettings();
+        
+        // If order changed, reshuffle words
+        if (settingsChanged && settings.cardOrder === 'random' && unknownWords.length > 0) {
+            shuffleArray(unknownWords);
+            currentIndex = 0;
+        }
+        
+        // Redisplay current card with new settings
+        if (unknownWords.length > 0) {
+            displayCard();
+        }
+    }
+
+    // Shuffle array (Fisher-Yates algorithm)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 
     function loadSet() {
         const setId = localStorage.getItem('currentLearningSetId');
@@ -289,6 +523,12 @@
 
                 allWords = currentSet.words;
                 unknownWords = [...allWords]; // Start with all words
+                
+                // Apply card order setting
+                if (settings.cardOrder === 'random') {
+                    shuffleArray(unknownWords);
+                }
+                
                 currentIndex = 0;
                 displayCard();
             })
@@ -310,16 +550,20 @@
         const cardNumber = currentIndex + 1;
         const totalWords = unknownWords.length;
 
+        // Determine which side should be front based on settings
+        const frontText = settings.firstSide === 'word' ? word.word : word.translation;
+        const backText = settings.firstSide === 'word' ? word.translation : word.word;
+
         const content = document.getElementById('content');
         content.innerHTML = `
             <div class="card-counter">Card ${cardNumber} of ${totalWords}</div>
             <div class="card-container">
                 <div class="card" id="flipCard" onclick="flipCard()">
                     <div class="card-front">
-                        <div class="card-text">${escapeHtml(word.word)}</div>
+                        <div class="card-text">${escapeHtml(frontText)}</div>
                     </div>
                     <div class="card-back">
-                        <div class="card-text">${escapeHtml(word.translation)}</div>
+                        <div class="card-text">${escapeHtml(backText)}</div>
                     </div>
                 </div>
             </div>
@@ -365,7 +609,12 @@
                 currentIndex = 0;
             }
         }
-
+        
+        // If random order and we're looping, reshuffle
+        if (settings.cardOrder === 'random' && unknownWords.length > 1 && currentIndex === 0) {
+            shuffleArray(unknownWords);
+        }
+ 
         displayCard();
     }
 
@@ -394,6 +643,12 @@
     function learnAgain() {
         // Reset unknown words to all words
         unknownWords = [...allWords];
+        
+        // Apply card order setting
+        if (settings.cardOrder === 'random') {
+            shuffleArray(unknownWords);
+        }
+        
         currentIndex = 0;
         displayCard();
     }
@@ -413,7 +668,8 @@
         return div.innerHTML;
     }
 
-    // Load set when page loads
+    // Load settings and set when page loads
+    loadSettings();
     loadSet();
 </script>
 </body>
