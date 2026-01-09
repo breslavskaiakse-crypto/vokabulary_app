@@ -1,5 +1,5 @@
 <?php
-$pdo = require 'db.php';
+$pdo = require 'db/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');

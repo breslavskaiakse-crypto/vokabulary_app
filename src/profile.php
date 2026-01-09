@@ -1,5 +1,5 @@
 <?php
-$pdo = require 'db.php';
+$pdo = require 'db/db.php';
 
 // Get user ID from session (we'll need to set this during login)
 $userId = $_SESSION['user_id'] ?? null;

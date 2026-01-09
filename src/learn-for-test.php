@@ -638,13 +638,13 @@
 
                 currentSet = data;
 
-                if (!currentSet || !currentSet.words || currentSet.words.length === 0) {
-                    document.getElementById('content').innerHTML = 
-                        '<div class="no-set-message">Set not found or has no words.</div>';
-                    return;
-                }
+        if (!currentSet || !currentSet.words || currentSet.words.length === 0) {
+            document.getElementById('content').innerHTML = 
+                '<div class="no-set-message">Set not found or has no words.</div>';
+            return;
+        }
 
-                allWords = currentSet.words;
+        allWords = currentSet.words;
                 // Initialize all words based on question type setting
                 if (settings.questionType === 'writing') {
                     wordStatus = allWords.map(() => 'type2');
@@ -658,9 +658,9 @@
                     applyRandomOrder();
                 }
                 
-                currentIndex = 0;
-                showFeedback = false;
-                displayCard();
+        currentIndex = 0;
+        showFeedback = false;
+        displayCard();
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -833,63 +833,63 @@
         
         if (isCorrect) {
             // Show "very good!" message and auto-advance
-            const content = document.getElementById('content');
-            content.innerHTML = `
-                <h1>Learn for a Test</h1>
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <h1>Learn for a Test</h1>
                 <div class="card-counter">Question ${cardNumber} of ${allWords.length} (Writing)</div>
-                <div class="card-container">
-                    <div class="test-card">
+                    <div class="card-container">
+                        <div class="test-card">
                         <div class="translation-text">${escapeHtml(frontText)}</div>
-                        <div class="input-section">
+                            <div class="input-section">
                             <label for="userAnswer">${answerLabel}</label>
-                            <input type="text" id="userAnswer" value="${escapeHtml(lastUserAnswer)}" disabled>
+                                <input type="text" id="userAnswer" value="${escapeHtml(lastUserAnswer)}" disabled>
+                            </div>
+                            <div class="feedback-message">Very good!</div>
                         </div>
-                        <div class="feedback-message">Very good!</div>
                     </div>
-                </div>
-            `;
-            setTimeout(() => {
+                `;
+                setTimeout(() => {
                 // Mark word as fully learned
                 wordStatus[currentIndex] = 'learned';
                 
                 // Move to next word
                 currentIndex++;
-                showFeedback = false;
-                displayCard();
-            }, 1500);
-        } else {
+                    showFeedback = false;
+                    displayCard();
+                }, 1500);
+            } else {
             // Show correct answer with text instruction, skip button, and "I answered correctly" button
-            const content = document.getElementById('content');
-            content.innerHTML = `
-                <h1>Learn for a Test</h1>
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <h1>Learn for a Test</h1>
                 <div class="card-counter">Question ${cardNumber} of ${allWords.length} (Writing)</div>
-                <div class="card-container">
-                    <div class="test-card">
+                    <div class="card-container">
+                        <div class="test-card">
                         <div class="translation-text">${escapeHtml(frontText)}</div>
-                        <div class="input-section">
+                            <div class="input-section">
                             <label for="userAnswer">${answerLabel}</label>
-                            <input type="text" id="userAnswer" value="${escapeHtml(lastUserAnswer)}" oninput="checkCorrectAnswer()" autofocus>
-                        </div>
-                        <div class="correct-answer">
-                            <div class="correct-answer-label">Correct answer:</div>
+                                <input type="text" id="userAnswer" value="${escapeHtml(lastUserAnswer)}" oninput="checkCorrectAnswer()" autofocus>
+                            </div>
+                            <div class="correct-answer">
+                                <div class="correct-answer-label">Correct answer:</div>
                             <div class="correct-answer-text" id="correctAnswer">${escapeHtml(expectedAnswer)}</div>
-                            <div class="copy-text">Copy the correct answer</div>
+                                <div class="copy-text">Copy the correct answer</div>
                             <div style="display: flex; gap: 10px; justify-content: center;">
                                 <button class="skip-button" onclick="skipToNext()">Skip</button>
                                 <button class="correct-button" onclick="markAsCorrect()">I answered correctly</button>
                             </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-            setTimeout(() => {
-                const input = document.getElementById('userAnswer');
-                if (input) {
-                    input.focus();
-                    input.select();
-                }
-            }, 100);
-        }
+                `;
+                setTimeout(() => {
+                    const input = document.getElementById('userAnswer');
+                    if (input) {
+                        input.focus();
+                        input.select();
+                    }
+                }, 100);
+            }
     }
     
     function markAsCorrect() {
@@ -963,7 +963,7 @@
         const txt = document.createElement('textarea');
         txt.innerHTML = html;
         return txt.value;
-    }
+        }
 
 
     function handleKeyPress(event) {

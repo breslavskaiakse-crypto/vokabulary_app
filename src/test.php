@@ -495,15 +495,15 @@
 
                 currentSet = data;
 
-                if (!currentSet || !currentSet.words || currentSet.words.length === 0) {
-                    document.getElementById('content').innerHTML = 
-                        '<div class="no-set-message">Set not found or has no words.</div>';
-                    return;
-                }
+        if (!currentSet || !currentSet.words || currentSet.words.length === 0) {
+            document.getElementById('content').innerHTML = 
+                '<div class="no-set-message">Set not found or has no words.</div>';
+            return;
+        }
 
-                words = currentSet.words;
+        words = currentSet.words;
                 originalWords = [...words];
-                userAnswers = [];
+        userAnswers = [];
                 trueFalseData = [];
                 
                 // Randomly assign question type for each word (only from enabled types)
@@ -537,8 +537,8 @@
                         trueFalseData = newTrueFalseData;
                     }
                     
-                    currentIndex = 0;
-                    displayCard();
+        currentIndex = 0;
+        displayCard();
                 });
             })
             .catch(error => {
@@ -642,12 +642,12 @@
         
         // Focus on input for writing questions
         if (questionType === 'writing') {
-            setTimeout(() => {
-                const input = document.getElementById('userAnswer');
-                if (input) {
-                    input.focus();
-                }
-            }, 100);
+        setTimeout(() => {
+            const input = document.getElementById('userAnswer');
+            if (input) {
+                input.focus();
+            }
+        }, 100);
         }
     }
     
@@ -875,11 +875,11 @@
                             }
                             
                             return `
-                                <div class="result-item ${result.isCorrect ? 'correct' : 'incorrect'}">
+                            <div class="result-item ${result.isCorrect ? 'correct' : 'incorrect'}">
                                     <div class="result-word"><strong>${escapeHtml(result.word)}</strong> <span style="font-size: 0.8em; color: #999;">(${questionTypeLabel})</span></div>
                                     <div class="result-translation">Correct translation: ${escapeHtml(result.translation)}</div>
                                     ${!result.isCorrect ? `<div class="result-user-answer">${answerDisplay}</div>` : ''}
-                                </div>
+                            </div>
                             `;
                         }).join('')}
                     </div>
@@ -896,7 +896,7 @@
         div.textContent = text;
         return div.innerHTML;
     }
-    
+
     // Load settings from localStorage
     function loadSettings() {
         const savedSettings = localStorage.getItem('testSettings');

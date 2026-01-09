@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-$pdo = require 'db.php';
+$pdo = require 'db/db.php';
 
 $userId = $_SESSION['user_id'] ?? null;
 

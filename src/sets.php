@@ -1,5 +1,5 @@
 <?php
-$pdo = require 'db.php';
+$pdo = require 'db/db.php';
 
 try {
     // Use backticks around table name and query() method like my-sets.php

@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-$pdo = require 'db.php';
+$pdo = require 'db/db.php';
 
 if (!isset($_GET['id'])) {
     echo json_encode(['error' => 'Set ID is required']);

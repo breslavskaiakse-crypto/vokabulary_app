@@ -2,7 +2,7 @@
 // setup-library.php - One-time setup script to initialize the vocabulary library
 // Run this script once to add the is_library column and import sample data
 
-$pdo = require 'db.php';
+$pdo = require 'db/db.php';
 
 echo "Setting up vocabulary library...\n\n";
 

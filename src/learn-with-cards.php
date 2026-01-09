@@ -314,7 +314,7 @@
             left: 50%;
             animation-delay: 1.2s;
         }
-
+        
         @keyframes float {
             0%, 100% {
                 transform: translateY(0px) rotate(0deg);
@@ -323,7 +323,7 @@
                 transform: translateY(-20px) rotate(10deg);
             }
         }
-
+        
         .congratulations-title {
             color: #6b4c93;
             font-size: 2.5em;
@@ -332,7 +332,7 @@
             position: relative;
             z-index: 2;
         }
-
+        
         .congratulations-buttons {
             display: flex;
             flex-direction: column;
@@ -341,7 +341,7 @@
             position: relative;
             z-index: 2;
         }
-
+        
         .congratulations-button {
             padding: 25px 50px;
             font-size: 1.8em;
@@ -354,11 +354,11 @@
             min-width: 300px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
+        
         .congratulations-button:hover {
             background-color: #8a6fa5;
         }
-
+        
         .congratulations-button:active {
             transform: scale(0.98);
         }
@@ -367,10 +367,10 @@
 <body>
 <button class="home-button" onclick="window.location.href='/'" title="Home">🏠</button>
 <button class="settings-button" onclick="openSettings()" title="Settings">⚙️</button>
-
-<div id="content">
-    <div class="no-set-message">Loading...</div>
-</div>
+    
+    <div id="content">
+        <div class="no-set-message">Loading...</div>
+    </div>
 
 <!-- Settings Modal -->
 <div class="modal-overlay" id="settingsModal" onclick="closeSettingsOnOverlay(event)">
@@ -498,7 +498,7 @@
     function loadSet() {
         const setId = localStorage.getItem('currentLearningSetId');
         if (!setId) {
-            document.getElementById('content').innerHTML =
+            document.getElementById('content').innerHTML = 
                 '<div class="no-set-message">No set selected. Please go back and select a set.</div>';
             return;
         }
@@ -515,22 +515,22 @@
 
                 currentSet = data;
 
-                if (!currentSet || !currentSet.words || currentSet.words.length === 0) {
-                    document.getElementById('content').innerHTML =
-                        '<div class="no-set-message">Set not found or has no words.</div>';
-                    return;
-                }
+        if (!currentSet || !currentSet.words || currentSet.words.length === 0) {
+            document.getElementById('content').innerHTML = 
+                '<div class="no-set-message">Set not found or has no words.</div>';
+            return;
+        }
 
-                allWords = currentSet.words;
-                unknownWords = [...allWords]; // Start with all words
+        allWords = currentSet.words;
+        unknownWords = [...allWords]; // Start with all words
                 
                 // Apply card order setting
                 if (settings.cardOrder === 'random') {
                     shuffleArray(unknownWords);
                 }
                 
-                currentIndex = 0;
-                displayCard();
+        currentIndex = 0;
+        displayCard();
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -572,7 +572,7 @@
                 <button class="action-button" onclick="nextCard(true)">I Know This Word</button>
             </div>
         `;
-
+        
         // Ensure card starts unflipped
         setTimeout(() => {
             const card = document.getElementById('flipCard');
@@ -593,7 +593,7 @@
         if (knowWord) {
             // Remove the word from unknown words
             unknownWords = unknownWords.filter((w, index) => index !== currentIndex);
-
+            
             // Adjust index if needed
             if (currentIndex >= unknownWords.length && unknownWords.length > 0) {
                 currentIndex = 0;
@@ -601,7 +601,7 @@
         } else {
             // Move to next card
             currentIndex++;
-
+            
             // If it was the last card, loop back to the first
             if (currentIndex >= unknownWords.length) {
                 currentIndex = 0;
@@ -612,7 +612,7 @@
         if (settings.cardOrder === 'random' && unknownWords.length > 1 && currentIndex === 0) {
             shuffleArray(unknownWords);
         }
- 
+        
         displayCard();
     }
 
@@ -630,7 +630,8 @@
                 <div class="congratulations-emoji">🥳</div>
                 <h1 class="congratulations-title">You've studied the set "${escapeHtml(currentSet.name)}"!</h1>
                 <div class="congratulations-buttons">
-                    <button class="congratulations-button" onclick="learnAgain()">Learn It with Cards Again</button>
+                    <button class="congratulations-button" onclick="learnAgain()">Learn with Cards Again</button>
+                    <button class="congratulations-button" onclick="learnForTest()">Learn for a Test</button>
                     <button class="congratulations-button" onclick="makeTest()">Make a Test</button>
                     <button class="congratulations-button" onclick="goToMySets()">My Sets</button>
                 </div>
@@ -649,6 +650,11 @@
         
         currentIndex = 0;
         displayCard();
+    }
+
+    function learnForTest() {
+        // Navigate to learn for test page (set ID is already stored)
+        window.location.href = 'learn-for-test';
     }
 
     function makeTest() {
